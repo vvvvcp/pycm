@@ -30,11 +30,12 @@ def update(request):
             output +=  query_url  + "<br/>\n" 
             changes=''
             try:
-                proxies = {
-                    "http": "http://127.0.0.1:8087",
-                    "https": "https://127.0.0.1:8087",
-                }
-                changes = rest.get(query_url, proxies=proxies)
+                #proxies = {
+                #    "http": "http://127.0.0.1:8087",
+                #    "https": "https://127.0.0.1:8087",
+                #}
+                #changes = rest.get(query_url, proxies=proxies)
+                changes = rest.get(query_url)
             except HTTPError as he:
                 output += '' + str(he.message)
             output += time.strftime('%Y-%m-%d %H:%M:%S') + "==> %d changes<br/>\n" % len(changes)
