@@ -43,7 +43,6 @@ def update(request):
             output += time.strftime('%Y-%m-%d %H:%M:%S') + "==> %d changes<br/>\n" % len(changes)
             for change in changes:
                 subject = str(change['subject'])
-                name = str(change['owner']['name'])
                 num =  str(change['_number'])
                 q = Contribution.objects.filter(employee_id=emp,review_id=num, community_id=comm)
                 if len(q) < 1:
