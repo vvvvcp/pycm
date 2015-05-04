@@ -17,6 +17,9 @@ from requests import HTTPError
 def index(request):
     return HttpResponse("Hello, world. You're at the polls index.")
 
+def query(request,dept):
+    return HttpResponse("Hello, query: " + dept)
+
 def update(request):
     output=""
     for emp in Employee.objects.order_by('email'):
