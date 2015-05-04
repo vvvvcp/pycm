@@ -61,3 +61,4 @@ perrit.py
 sqlite.py
 test.db
 pygerrit/
+*/migrations
