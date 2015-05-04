@@ -20,7 +20,7 @@ class EmployeeAdmin(admin.ModelAdmin):
 admin.site.register(Employee,EmployeeAdmin)
 
 class CommunityAdmin(admin.ModelAdmin):
-    fields = ['name', 'review_base']
+    fields = ['name', 'review_base','enabled']
     list_display = fields
     
 admin.site.register(Community, CommunityAdmin)

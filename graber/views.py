@@ -22,6 +22,8 @@ def update(request):
     for emp in Employee.objects.order_by('email'):
         output += '' + str('<h1>%s</h1>' % emp.name)
         for comm in Community.objects.order_by('name'):
+            if not comm.enabled :
+                continue
             output += '<h2>%s</h2>' % comm.name
             #rest = GerritRestAPI(url='http://review.cyanogenmod.org/')
             rest = GerritRestAPI(url=comm.review_base)

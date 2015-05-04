@@ -32,7 +32,7 @@ class Employee(models.Model):
 class Community(models.Model):
     name = models.CharField(max_length=200)
     review_base = models.CharField(max_length=2048)
-    disabled = models.BooleanField(default=False)
+    enabled = models.BooleanField(default=True)
     def __str__(self):
         return '%s' % self.name
 
