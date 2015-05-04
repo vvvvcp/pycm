@@ -1,9 +1,10 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from graber.models import Department, Team, Employee, Community, Contribution
-import sys
-import os
-sys.path.append(os.path.abspath('./pygerrit'))
+# use system-wide one, uncomment for debug purpose only
+#import sys
+#import os
+#sys.path.append(os.path.abspath('./pygerrit'))
 
 from requests.auth import HTTPDigestAuth
 from pygerrit.rest import GerritRestAPI
