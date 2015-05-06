@@ -24,7 +24,10 @@ def average(value):
     emp_count = get_employee_count(value)
     output += "<br/>\nTotal: %d" % (total)
     output += "<br/>\nEmployees: %d" % (emp_count)
-    avg = total / emp_count
+    if total == 0 or emp_count == 0:
+        avg = 0
+    else:
+        avg = total / emp_count
     output += "<br/>\nAverage: %d" % (avg)
     return HttpResponse(output)
 
@@ -66,11 +69,18 @@ def summary(value):
 
 def query(request,category,value):
     category = category.lower()
+    value_query = value
+    if '/' in value:
+        value_query = value.split('/')[-1]
+    if '.' in value_query:
+        ext = value_query.split('.')[-1]
+        value_query = value_query.split('.')[0]
+
     switch = {
         'avg': average,
         'sum': summary,
         'all': summary}
-    return switch[category](value)
+    return switch[category](value_query)
     #return HttpResponse("Hello, query: %s=%s" % (category, value))
 
 def update(request):
