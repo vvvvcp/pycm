@@ -38,11 +38,11 @@ def get_employee_count(value):
     sql="""SELECT count(id) FROM graber_employee
             WHERE team_id_id in (
 		SELECT id FROM graber_team
-		WHERE name=%s
+		WHERE UPPER(name)=UPPER(%s)
 		union all
 		SELECT id FROM graber_team
 		WHERE department_id_id==(SELECT id FROM graber_department
-			WHERE name=%s)
+			WHERE UPPER(name)=UPPER(%s))
             )"""
     return int("%d" % cursor.execute(sql, [value, value]).fetchone())
 
@@ -52,11 +52,11 @@ def get_contribution_total(value):
         WHERE employee_id_id in (SELECT id FROM graber_employee
             WHERE team_id_id in (
                 SELECT id FROM graber_team
-                    WHERE name=%s
+                    WHERE UPPER(name)=UPPER(%s)
                 union all
                 SELECT id FROM graber_team
                     WHERE department_id_id==(SELECT id FROM graber_department
-                        WHERE name=%s
+                        WHERE UPPER(name)=UPPER(%s)
                     )
             )
         )"""
