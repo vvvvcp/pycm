@@ -5,6 +5,8 @@ from graber.models import Department, Team, Employee, Community, Contribution
 #import sys
 #import os
 #sys.path.append(os.path.abspath('./pygerrit'))
+from PIL import Image, ImageDraw, ImageFont, ImageEnhance
+import pil
 
 from requests.auth import HTTPDigestAuth
 from pygerrit.rest import GerritRestAPI
@@ -67,19 +69,53 @@ def summary(value):
     output += "<br/>\nTotal: %d" % count
     return HttpResponse(output)
 
+def respond_pic(name,value):
+    file = pil.get_pic(name, value)
+    if file:
+        response = HttpResponse(content_type="image/png")
+        image = Image.open(file)
+        image.save(response, "PNG")
+    return response
+
+def summary_pic(value):
+    #output = "Hello, summary_pic: %s" % ( value)
+    count = get_contribution_total(value)
+    #output= """<img src="%s"/>""" % file
+    #return HttpResponse(output)
+    return respond_pic(value, count)
+
+def average_pic(value):
+    output = "Hello, average_pic: %s" % ( value)
+    total = get_contribution_total(value)
+    emp_count = get_employee_count(value)
+    output += "<br/>\nTotal: %d" % (total)
+    output += "<br/>\nEmployees: %d" % (emp_count)
+    if total == 0 or emp_count == 0:
+        avg = 0
+    else:
+        avg = total / emp_count
+    return respond_pic(value, avg)
+
+
 def query(request,category,value):
     category = category.lower()
     value_query = value
     if '/' in value:
         value_query = value.split('/')[-1]
+    ext=''
     if '.' in value_query:
         ext = value_query.split('.')[-1]
         value_query = value_query.split('.')[0]
-
-    switch = {
-        'avg': average,
-        'sum': summary,
-        'all': summary}
+    if ext:
+        switch = {
+            'avg': average_pic,
+            'sum': summary_pic,
+            'all': summary_pic}
+    else:
+        switch = {
+            'avg': average,
+            'sum': summary,
+            'all': summary}
     return switch[category](value_query)
     #return HttpResponse("Hello, query: %s=%s" % (category, value))
 
