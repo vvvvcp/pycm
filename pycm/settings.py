@@ -37,7 +37,6 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'graber',
-    'import_export',
 )
 
 MIDDLEWARE_CLASSES = (
